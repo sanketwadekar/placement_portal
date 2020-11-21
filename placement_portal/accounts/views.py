@@ -43,6 +43,7 @@ def loginView(request):
 @login_required(login_url='login')
 def homeView(request):
     print(request.user)
+    logout(request)
     return HttpResponse('Welcome '+str(request.user))
 
 def logoutView(request):
