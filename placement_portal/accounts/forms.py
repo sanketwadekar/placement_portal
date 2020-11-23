@@ -15,7 +15,3 @@ class CreateUserForm(UserCreationForm):
         if r.count():
             raise  ValidationError("Email already exists")
         return email
-# class StudentForm(forms.ModelForm):
-#     class Meta:
-#         model = studentModel
-#         fields = ['placementSeason']

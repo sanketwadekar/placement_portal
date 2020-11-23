@@ -9,7 +9,6 @@ from django.contrib.auth.decorators import login_required
 from .forms import CreateUserForm
 # Create your views here.
 def registerView(request):
-   # print(request.POST)
     if request.user.is_authenticated:
         return redirect('home')
     else:
@@ -17,16 +16,14 @@ def registerView(request):
         if request.method == 'POST':
             registerForm = CreateUserForm(request.POST)
             if registerForm.is_valid():
-                print("inside...")
-                user = registerForm.save()
+                registerForm.save()
                 user1 = registerForm.cleaned_data.get('username')
-                messages.success(request,'Account was successfully created for '+user1)
+                messages.success(request,'Account was successfully created for ' + user1)
                 return redirect('login')
     context = {'registerForm':registerForm}
     return render(request, 'accounts/register.html', context)
 
 def loginView(request):
-    #print(request.POST)
     if request.user.is_authenticated:
         return redirect('home')
     else:
@@ -47,11 +44,8 @@ def loginView(request):
 @login_required(login_url='login')
 def homeView(request):
     print(request.user)
-    logout(request)
-    return HttpResponse('Welcome '+str(request.user))
+    return render(request, 'accounts/dashboard.html', context = {})
 
 def logoutView(request):
     logout(request)
     return redirect('login')
-
-
