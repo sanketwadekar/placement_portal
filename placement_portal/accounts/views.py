@@ -47,11 +47,8 @@ def loginView(request):
 @login_required(login_url='login')
 def homeView(request):
     print(request.user)
-    logout(request)
-    return HttpResponse('Welcome '+str(request.user))
+    return render(request, 'accounts/dashboard.html', context = {})
 
 def logoutView(request):
     logout(request)
     return redirect('login')
-
-
