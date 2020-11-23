@@ -21,7 +21,7 @@ class jobModel(models.Model):
 
   #jobId = models.IntegerField(primary_key = True,unique = True,auto_created = True)
   name = models.CharField(max_length = 30,unique = True,blank = False,null = True)
-  cName = models.ForeignKey(companyModel,on_delete= models.SET_NULL, null = True)
+  cName = models.ForeignKey(companyModel,on_delete= models.CASCADE, null = True)
   salary = models.CharField(max_length = 20,blank = True)
   dateOfArrival = models.DateField()
   lastDateToApply = models.DateField()
