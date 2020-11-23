@@ -13,18 +13,44 @@ class companyModel(models.Model):
 
   def __str__(self):
 	  return self.name
-# # #job model
 # def path_to_upload_jd(instance,filename):
 #   return 'JD/jd_{0}'.format(instance.cName)
+#job model
+
 class jobModel(models.Model):
 
   #jobId = models.IntegerField(primary_key = True,unique = True,auto_created = True)
+  name = models.CharField(max_length = 30,unique = True,blank = False,null = True)
   cName = models.ForeignKey(companyModel,on_delete= models.SET_NULL, null = True)
   salary = models.CharField(max_length = 20,blank = True)
   dateOfArrival = models.DateField()
   lastDateToApply = models.DateField()
   jdFile = models.FileField(upload_to = 'JD/')
   
-#   def __str__(self):
-# 	  return self.cName
+  def __str__(self):
+	  return self.name
 
+#applicant model
+class applicantModel(models.Model):
+
+  statusChoices = (
+    ('Hired','Hired'),
+    ('Rejected','Rejected'),
+    ('In Process','In Process')
+  )
+
+  user = models.ForeignKey(User, on_delete = models.CASCADE)
+  jobId = models.ForeignKey(jobModel, on_delete = models.CASCADE)
+  status = models.CharField(max_length = 10,choices = statusChoices)
+
+
+#notice/updates model
+
+class noticeModel(models.Model):
+
+  name = models.CharField(max_length = 20,blank = False,null = False,default = 'Default')
+  noticeFile = models.FileField(upload_to = 'NOTICE/')
+  subject = models.CharField(max_length = 100,blank = False)
+
+  def __str__(self):
+    return self.name
