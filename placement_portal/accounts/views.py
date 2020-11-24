@@ -53,19 +53,22 @@ def logoutView(request):
 
 
 def noticeView(request):
-    notices = noticeModel.objects.all()
+    notices = noticeModel.objects.filter()
     print(notices)
     context = {'notice': notices}
     #return render(request, 'accounts/notices.html', context)
 
 
-
-    
-
 def applicantView(request):
     print(request.user)
-    application = applicantModel.objects.get(user = request.user)
-    context = {'applicant':application}
+    application = applicantModel.objects.filter(user = request.user)
+    #print(application[0].status)
+    #print(application[0].jobId)
+    if not application:
+        print("no application found")
+        return HttpResponse("There are no applications")
+    #print(application.jobId_id)
+    context = {'applicant' : application}
     return render(request, 'accounts/dashboard.html', context)
 
 
