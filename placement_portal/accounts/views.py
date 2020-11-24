@@ -1,6 +1,7 @@
 from django.shortcuts import render,HttpResponse,redirect
 from django.contrib.auth import authenticate, login, logout
-
+from .models import noticeModel
+from .models import applicantModel
 from django.contrib import messages
 
 from django.contrib.auth.decorators import login_required
@@ -49,3 +50,21 @@ def homeView(request):
 def logoutView(request):
     logout(request)
     return redirect('login')
+
+
+def noticeView(request):
+    notices = noticeModel.objects.all()
+    print(notices)
+    context = {'notice': notices}
+    #return render(request, 'accounts/notices.html', context)
+
+
+
+    
+
+#def applicantView(request):
+    #print(request.user)
+    #application = applicantModel.objects.get(user = request.user)
+    #print(application)
+
+
