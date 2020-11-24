@@ -62,9 +62,10 @@ def noticeView(request):
 
     
 
-#def applicantView(request):
-    #print(request.user)
-    #application = applicantModel.objects.get(user = request.user)
-    #print(application)
+def applicantView(request):
+    print(request.user)
+    application = applicantModel.objects.get(user = request.user)
+    context = {'applicant':application}
+    return render(request, 'accounts/dashboard.html', context)
 
 
