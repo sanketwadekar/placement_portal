@@ -1,0 +1,38 @@
+{% extends 'accounts/base.html' %}
+{%block title%}Applications{%endblock title%}
+{% block content %}
+<div>
+  <div class="display-4 border-bottom mx-1">
+    Applications
+  </div>
+  <div class="container" style="max-width: 1000px; margin-left: auto;  margin-right: auto; padding-left: 10px; padding-right: 10px; margin-top:50px;">
+    <ul class="responsive-table">
+      <li class="table-header" style="border-radius: 3px; 
+                                        padding: 25px 30px; 
+                                        display: flex; 
+                                        justify-content: space-between; 
+                                        margin-bottom: 25px; background-color: #95A5A6; 
+                                        font-size: 14px; 
+                                        text-transform: uppercase; 
+                                        letter-spacing: 0.03em;">
+        <div class="col col-1" style="flex-basis: 10%;">Company Name</div>
+        <div class="col col-2" style="flex-basis: 40%;">Job Name</div>
+        <div class="col col-3" style="flex-basis: 25%;">Salary</div>
+        <div class="col col-4" style="flex-basis: 25%;">Status</div>
+      </li>
+        {% for app in applicant %}
+          <li class="table-row" style="border-radius: 3px;
+                                        padding: 25px 30px;
+                                        display: flex;
+                                        justify-content: space-between;
+                                        margin-bottom: 25px; background-color: #ffffff;
+                                        box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.1);">
+            <div class="col col-1" style="flex-basis: 10%;">{{ app.jobId.cName.name }}</div>
+            <div class="col col-2" style="flex-basis: 40%;">{{ app.jobId }}</div>
+            <div class="col col-3" style="flex-basis: 25%;">{{ app.jobId.salary }}</div>
+            <div class="col col-4" style="flex-basis: 25%;">{{ app.status }}</div>
+          </li>
+        {% endfor %}
+  </div>
+</div>
+{% endblock content %}
