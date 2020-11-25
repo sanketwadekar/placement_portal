@@ -1,48 +1,49 @@
 {% extends 'accounts/base.html' %}
-
-{%block title%}Dashboard{%endblock title%}
+{%block title%}Notices{%endblock title%}
 {% block content %}
 <div>
   <div class="display-4 border-bottom mx-1">
     Job alerts
   </div>
-  <div class="d-sm-flex flex-sm-row mb-3 align-items-center justify-content-center">
-    <div class="card border-primary m-1">
-      <div class="card-header">Header</div>
-      <div class="card-body">
-        <h4 class="card-title">Primary card title</h4>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-          content.</p>
-      </div>
-      <div class="d-inline-flex flex-row-reverse ">
-        <button type="button" class="btn btn-primary m-2">Apply</button>
-        <button type="button" class="btn btn-primary m-2">Details</button>
-      </div>
-    </div>
-    <div class="card border-primary m-1">
-      <div class="card-header">Header</div>
-      <div class="card-body">
-        <h4 class="card-title">Primary card title</h4>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-          content.</p>
-      </div>
-      <div class="d-inline-flex flex-row-reverse ">
-        <button type="button" class="btn btn-outline-warning m-2">Apply</button>
-        <button type="button" class="btn btn-outline-info m-2">Details</button>
+  <div class="container-fluid row mx-auto">
+    {% for job in page_obj %}
+    <div class="col-sm-4 p-1">
+      <div class="card border border-primary p-1">
+        <div class="card-header">
+          <h5>{{job.name}}</h5>
+        </div>
+        <div class="card-body">
+
+          <div class="card-text"><span class="font-weight-bold">Company name: </span>{{job.cName.name}}</div>
+          <div class="card-text"><span class="font-weight-bold">Salary: </span>{{job.salary}}</div>
+          <div class="card-text"><span class="font-weight-bold">Address: </span>{{job.cName.address}}</div>
+          <div class="card-text"><span class="font-weight-bold">About: </span>{{job.cName.about}}</div>
+          <div class="card-text"><span class="font-weight-bold">Last date to apply: </span>{{job.lastDateToApply.day}}/{{job.lastDateToApply.month}}/{{job.lastDateToApply.year}}</div>
+        </div>
+        <div class="d-inline-flex flex-row-reverse ">
+          <a class="btn btn-primary m-2" href="{{job.jdFile.url}}" role="button" target="blank">Details</a>
+          <a class="btn btn-primary m-2" href="/apply/{{job.id}}" role="button">Apply</a>
+        </div>
       </div>
     </div>
-    <div class="card border-primary m-1">
-      <div class="card-header">Header</div>
-      <div class="card-body">
-        <h4 class="card-title">Primary card title</h4>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-          content.</p>
-      </div>
-      <div class="d-inline-flex flex-row-reverse ">
-        <button type="button" class="btn btn-primary m-2">Apply</button>
-        <button type="button" class="btn btn-primary m-2">Details</button>
-      </div>
-    </div>
+    {% endfor %}
   </div>
+  </span>
+  <div class="d-flex justify-content-center m-2">
+    <ul class="pagination">
+      {% if page_obj.has_previous %}
+      <!-- <li class="page-item"><a class="page-link" href="?page=1">&laquo; first</a></li> -->
+      <li class="page-item border border-dark"><a class="page-link"
+          href="?page={{ page_obj.previous_page_number }}">previous</a></li>
+      {% endif %}
+
+      {% if page_obj.has_next %}
+      <li class="page-item border border-dark"><a class="page-link"
+          href="?page={{ page_obj.next_page_number }}">next</a></li>
+      <!-- <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a></li> -->
+      {% endif %}
+    </ul>
+  </div>
+
 </div>
 {% endblock content %}
