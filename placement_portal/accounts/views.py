@@ -56,7 +56,7 @@ def logoutView(request):
     logout(request)
     return redirect('login')
 
-
+@login_required(login_url='login')
 def noticeView(request):
     notices = noticeModel.objects.filter().order_by('-date')
     print(notices[0].date)
@@ -67,7 +67,7 @@ def noticeView(request):
     context = {'notice': notices,'page_obj':page_obj}
     return render(request, 'accounts/notices.html', context)
 
-
+@login_required(login_url='login')
 def applicantView(request):
     print(request.user)
     application = applicantModel.objects.filter(user = request.user)
@@ -82,7 +82,7 @@ def applicantView(request):
     return render(request, 'accounts/dashboard.html', context)
 
 #apply to job view
-
+@login_required(login_url='login')
 def applyToJobView(request,jobId):
     condition1 = Q(user = request.user)
     condition2 = Q(jobId = jobId)
