@@ -25,7 +25,7 @@ class jobModel(models.Model):
   salary = models.CharField(max_length = 20,blank = True)
   dateOfArrival = models.DateField()
   lastDateToApply = models.DateField()
-  jdFile = models.FileField(upload_to = 'JD/')
+  jdFile = models.FileField(upload_to = 'FILES/JD/')
   
   def __str__(self):
 	  return self.name
@@ -49,9 +49,9 @@ class applicantModel(models.Model):
 class noticeModel(models.Model):
 
   name = models.CharField(max_length = 20,blank = False,null = False,default = 'Default')
-  noticeFile = models.FileField(upload_to = 'NOTICE/')
+  noticeFile = models.FileField(upload_to = 'FILES/NOTICE/')
   subject = models.CharField(max_length = 100,blank = False)
-  date = models.DateField()
+  date = models.DateField(default = '2020-11-12')
 
   def __str__(self):
     return self.name

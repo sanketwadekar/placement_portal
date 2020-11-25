@@ -7,8 +7,8 @@ urlpatterns = [
     path('', views.homeView, name = 'home'),
     path('logout/', views.logoutView, name = 'logout'),
     path('notices/', views.noticeView, name = 'notices'),
-
-    path('application/', views.applicantView, name = 'application')
+    path('apply/<str:jobId>/', views.applyToJobView, name = 'apply'),
+    path('applications/', views.applicantView, name = 'applications')
 
 
     

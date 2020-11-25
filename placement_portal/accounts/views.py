@@ -1,10 +1,11 @@
 from django.shortcuts import render,HttpResponse,redirect
 from django.contrib.auth import authenticate, login, logout
-from .models import noticeModel
+from .models import noticeModel,jobModel
 from .models import applicantModel
 from django.contrib import messages
-
+from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 #from .models import *
 from .forms import CreateUserForm
@@ -44,8 +45,12 @@ def loginView(request):
 
 @login_required(login_url='login')
 def homeView(request):
-    print(request.user)
-    return render(request, 'accounts/dashboard.html', context = {})
+    jobs = jobModel.objects.filter().order_by('-lastDateToApply')
+    jobPaginator = Paginator(jobs,6)
+    page_number = request.GET.get('page_number')
+    page_obj = jobPaginator.get_page(page_number)
+    context = {'jobs':jobs,'page_obj':page_obj}
+    return render(request, 'accounts/dashboard.html', )
 
 def logoutView(request):
     logout(request)
@@ -56,7 +61,10 @@ def noticeView(request):
     notices = noticeModel.objects.filter().order_by('-date')
     print(notices[0].date)
     print(notices[1].date)
-    context = {'notice': notices}
+    noticePaginator = Paginator(notices,6)
+    page_number = request.GET.get('page_number')
+    page_obj = noticePaginator.get_page(page_number)
+    context = {'notice': notices,'page_obj':page_obj}
     return render(request, 'accounts/notices.html', context)
 
 
@@ -73,4 +81,17 @@ def applicantView(request):
     context = {'applicant' : application}
     return render(request, 'accounts/dashboard.html', context)
 
+#apply to job view
 
+def applyToJobView(request,jobId):
+    condition1 = Q(user = request.user)
+    condition2 = Q(jobId = jobId)
+    checkIfApplied = applicantModel.objects.filter(condition1 & condition2)
+
+    if len(checkIfApplied):
+        messages.info(request,'Already applied...')
+    else:
+        applicant = applicantModel(user = request.user, jobId = jobId, status = 'In Process')
+        messages.success(request,'Applied successfully...')
+    
+    return redirect('home')
