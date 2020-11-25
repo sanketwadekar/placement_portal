@@ -1,32 +1,45 @@
 {% extends 'accounts/base.html' %}
-{% block title %}Notice{% endblock title%}
+{% block title %}Notices{% endblock title%}
 {% block content %}
-{% comment %} {% for notice in notices %} {% endcomment %}
-<div class="cards" style = "display: flex; justify-content: center; margin-top: 30px">
-    <div class="card text-white bg-dark mb-3" style="max-width: 20rem;">
-    <div class="card-header">Header</div>
-    <div class="card-body">
-        <h4 class="card-title">Dark card title</h4>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    </div>
-    </div>
-    <div class="card text-white bg-dark mb-3" style="max-width: 20rem; margin-left: 10px;">
-    <div class="card-header">Header</div>
-    <div class="card-body">
-        <h4 class="card-title">Dark card title</h4>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    </div>
-    </div>
-    <div class="card text-white bg-dark mb-3" style="max-width: 20rem; margin-left: 10px;">
-    <div class="card-header">Header</div>
-    <div class="card-body">
-        <h4 class="card-title">Dark card title</h4>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    </div>
-    </div>
-</div>
-<script>
+<div>
+  <div class="display-4 border-bottom mx-1">
+    Notices
+  </div>
+  <div class="container-fluid row mx-auto">
+    {% for n in notice %}
+    <div class="col-sm-4 p-1">
+      <div class="card border border-primary p-1">
+        <div class="card-header">
+          <h5>{{n.name}}</h5>
+        </div>
+        <div class="card-body">
 
-</script>
-{% comment %} {% endfor %} {% endcomment %}
+          <div class="card-text"><span class="font-weight-bold">Subject: </span>{{n.subject}}</div>
+          <div class="card-text"><span class="font-weight-bold">Date: </span>{{n.date}}</div>
+        </div>
+        <div class="d-inline-flex flex-row-reverse ">
+          <a class="btn btn-primary m-2" href="{{n.noticeFile.url}}" role="button" target="_blank">Details</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  </span>
+  <div class="d-flex justify-content-center m-2">
+    <ul class="pagination">
+      {% if page_obj.has_previous %}
+      <!-- <li class="page-item"><a class="page-link" href="?page=1">&laquo; first</a></li> -->
+      <li class="page-item border border-dark"><a class="page-link"
+          href="?page={{ page_obj.previous_page_number }}">previous</a></li>
+      {% endif %}
+
+      {% if page_obj.has_next %}
+      <li class="page-item border border-dark"><a class="page-link"
+          href="?page={{ page_obj.next_page_number }}">next</a></li>
+      <!-- <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a></li> -->
+      {% endif %}
+    </ul>
+  </div>
+
+</div>
 {% endblock content %}
