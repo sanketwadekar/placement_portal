@@ -5,7 +5,7 @@
 	<div class="h-100">
 		
 		<div class="row">
-			<div class="card border border-primary p-4 col-4 mx-auto">
+			<div class="card border border-primary shadow p-4 col-4 mx-auto">
 				<div>
 					{% for errorlist in registerForm.errors.values %}
 					{% for error in errorlist %}
@@ -76,10 +76,10 @@
 <script>
 
 	var form_fields = document.getElementsByTagName('input')
-	form_fields[1].placeholder = 'Username..';
+	form_fields[1].placeholder = 'Registration ID';
 	form_fields[2].placeholder = 'First name';
 	form_fields[3].placeholder = 'Last name';
-	form_fields[4].placeholder = 'Email..';
+	form_fields[4].placeholder = 'Email';
 	form_fields[5].placeholder = 'Enter password...';
 	form_fields[6].placeholder = 'Re-enter Password...';
 

@@ -1,5 +1,5 @@
 {% extends 'accounts/base.html' %}
-{%block title%}Notices{%endblock title%}
+{%block title%}Job alerts{%endblock title%}
 {% block content %}
 <div>
   <div class="display-4 border-bottom mx-1">
@@ -18,7 +18,8 @@
           <div class="card-text"><span class="font-weight-bold">Salary: </span>{{job.salary}}</div>
           <div class="card-text"><span class="font-weight-bold">Address: </span>{{job.cName.address}}</div>
           <div class="card-text"><span class="font-weight-bold">About: </span>{{job.cName.about}}</div>
-          <div class="card-text"><span class="font-weight-bold">Last date to apply: </span>{{job.lastDateToApply.day}}/{{job.lastDateToApply.month}}/{{job.lastDateToApply.year}}</div>
+          <div class="card-text"><span class="font-weight-bold">Last date to apply:
+            </span>{{job.lastDateToApply.day}}/{{job.lastDateToApply.month}}/{{job.lastDateToApply.year}}</div>
         </div>
         <div class="d-inline-flex flex-row-reverse ">
           <a class="btn btn-primary m-2" href="{{job.jdFile.url}}" role="button" target="blank">Details</a>
