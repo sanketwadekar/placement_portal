@@ -5,9 +5,9 @@
   <div class="display-4 border-bottom mx-1">
     Notices
   </div>
-  <div class="container-fluid row mx-auto">
-    {% for n in notice %}
-    <div class="col-sm-4 p-1">
+  <div class="card-columns mx-auto">
+    {% for n in page_obj %}
+    <div class="">
       <div class="card border border-primary p-1">
         <div class="card-header">
           <h5>{{n.name}}</h5>
@@ -24,6 +24,18 @@
     </div>
     {% endfor %}
   </div>
-  </span>
+  <div class="d-flex justify-content-center m-2">
+    <ul class="pagination">
+      {% if page_obj.has_previous %}
+      <li class="page-item border border-dark"><a class="page-link"
+          href="?page={{ page_obj.previous_page_number }}">previous</a></li>
+      {% endif %}
+
+      {% if page_obj.has_next %}
+      <li class="page-item border border-dark"><a class="page-link"
+          href="?page={{ page_obj.next_page_number }}">next</a></li>
+      {% endif %}
+    </ul>
+  </div>
 </div>
 {% endblock content %}

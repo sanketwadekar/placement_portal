@@ -67,20 +67,21 @@ def logoutView(request):
 def noticeView(request):
     notices = noticeModel.objects.filter().order_by('-date')
     noticePaginator = Paginator(notices, 6)
-    page_number = request.GET.get('page_number')
+    page_number = request.GET.get('page')
     page_obj = noticePaginator.get_page(page_number)
-    context = {'notice': notices, 'page_obj': page_obj}
+    context = {'page_obj': page_obj}
     return render(request, 'accounts/notices.html', context)
 
 
 @login_required(login_url='login')
 def applicantView(request):
-    print(request.user)
-    application = applicantModel.objects.filter(user=request.user)
-    if not application:
-        print("no application found")
+    applications = applicantModel.objects.filter(user=request.user)
+    appsPaginator = Paginator(applications, 6)
+    page_number = request.GET.get('page')
+    page_obj = appsPaginator.get_page(page_number)
+    context = {'page_obj': page_obj}
+    if not applications:
         return HttpResponse("There are no applications")
-    context = {'applicant': application}
     return render(request, 'accounts/applications.html', context)
 
 
