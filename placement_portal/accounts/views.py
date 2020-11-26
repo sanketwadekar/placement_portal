@@ -6,9 +6,10 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-
-#from .models import *
+from datetime import date
+from .mailEngine import sendRegistrationMail
 from .forms import CreateUserForm
+#from .models import *
 # Create your views here.
 
 def aboutView(request):
@@ -26,6 +27,8 @@ def registerView(request):
                 user1 = registerForm.cleaned_data.get('username')
                 messages.success(
                     request, 'Account was successfully created for ' + user1)
+                subject, htmplTemplateName, to = 'welcome', 'registerMailTemplate.html', request.user.email 
+                sendRegistrationMail(request,subject,htmplTemplateName,to)
                 return redirect('login')
     context = {'registerForm': registerForm}
     return render(request, 'accounts/register.html', context)
@@ -91,9 +94,12 @@ def applicantView(request):
 def applyToJobView(request, jobId):
     condition1 = Q(user=request.user)
     condition2 = Q(jobId=jobId)
+    checkIfDatePassed = jobModel.objects.get(id = jobId)
     checkIfApplied = applicantModel.objects.filter(condition1 & condition2)
     if len(checkIfApplied):
         messages.info(request, 'Already applied...')
+    elif date.today()>checkIfDatePassed.lastDateToApply:
+        messages.success(request, 'Cannot apply date passed..')
     else:
         applicant = applicantModel(
             user=request.user, jobId=jobModel(id=jobId), status='In Process')

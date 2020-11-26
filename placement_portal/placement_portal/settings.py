@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts',
+    'customAdmin',
 ]
 
 MIDDLEWARE = [
@@ -79,7 +80,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'placementportal',
         'USER': 'root',
-        'PASSWORD':'password',
+        'PASSWORD':'******',
         'HOST': 'localhost',
         'PORT': '3306',
     }
@@ -127,3 +128,13 @@ STATIC_URL = '/static/'
 #file upload setting
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+
+#mailer settings
+#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+#mail credentials
+EMAIL_HOST_USER = "mailer.jobportal@gmail.com"
+EMAIL_HOST_PASSWORD = "placementportaladmin@123"
