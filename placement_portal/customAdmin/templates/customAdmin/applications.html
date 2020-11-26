@@ -1,0 +1,29 @@
+{% extends 'accounts/base.html' %}
+{%block title%}Applications{%endblock title%}
+{% block content %}
+<div>
+  <div class="display-4 border-bottom mx-1">
+    Applications
+  </div>
+  <table class="table table-hover mt-5" style="border: 1px solid black;">
+  <thead>
+    <tr class="table-primary">
+      <th scope="col" style="font-size: 20px; border: 1px solid black;">Company Name</th>
+      <th scope="col" style="font-size: 20px; border: 1px solid black;">Job Name</th>
+      <th scope="col" style="font-size: 20px; border: 1px solid black;">Last Date</th>
+      <th scope="col" style="font-size: 20px; border: 1px solid black;">Applications</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for app in page_obj %}
+    <tr class="table-default">
+      <th scope="row" style="font-size: 15px; border: 1px solid black;">{{ app.cName }}</th>
+      <td style="font-size: 15px; border: 1px solid black;">{{ app.name }}</td>
+      <td style="font-size: 15px; border: 1px solid black;">{{ app.lastDateToApply }}</td>
+      <td style="font-size: 15px; border: 1px solid black;"><a class="btn btn-primary m-2" href="view/applications/{{app.id}}" target="_blank">APPLICATIONS</a></td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endblock content %}

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lekton:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.5.2/lux/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css">
+    <style>
+
+        .background-yellow{
+            background-color: rgb(255, 183, 0);
+        }
+
+        .header {
+            font-family: "Lekton", sans-serif;
+            font-weight: bold;
+            font-size: 40px;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            background-color: rgb(255, 255, 255);
+            border-bottom: solid 5px rgba(0, 0, 0);
+        }
+
+        ::selection {
+            background-color: rgba(255, 255, 255, 0);
+        }
+
+        .navbar {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgb(255, 183, 0);
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            margin: 0;
+        }
+
+        .nav-item {
+            display: inline-block;
+            padding: 1rem;
+            margin: 0;
+            border-bottom: solid 2px rgba(255, 255, 255, 0);
+        }
+
+        .nav-item:hover {
+            background-color: rgba(255, 172, 47, 0.563);
+            text-decoration: none;
+            border-bottom: solid 2px rgb(177, 104, 9);
+            transition-duration: 500ms;
+        }
+
+        .nav-name-container {
+            padding: 1rem;
+            font-weight: bold;
+        }
+
+        .nav-name:hover {
+            color: rgb(220, 20, 60);
+            font-style: italic;
+        }
+
+        .navbar a:hover {
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background-color: rgb(255, 174, 0);
+            color: black;
+        }
+    </style>
+    <title>{% block title %}Placements portal{% endblock title%}</title>
+    {% block styles %}{% endblock styles %}
+</head>
+
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <div id="root">
+        <div class="d-flex align-items-center justify-content-center header" id="header">
+            <span style="font-style: italic;">&#123;%</span><span>&nbsp;placements&nbsp;</span><span
+                style="font-style: italic;">%&#125;</span>
+            <!-- <span id="header-0">.</span><span id="header-1">.</span><span id="header-2">.</span> -->
+        </div>
+        {% if request.user.is_authenticated %}
+        {% include './navbar.html'%}
+        {% endif %}
+        {% include './messages.html' %}
+        <div class="container-fluid">
+            {% block content %}
+            {% endblock content %}
+        </div>
+        {% include './footer.html' %}
+    </div>
+    <script>
+        let count = 0;
+        const header = document.getElementById("header");
+
+        window.onscroll = function (e) {
+            if (this.oldScroll > this.scrollY) {
+                document.getElementById("header").style.borderBottomColor = "rgb(0,0,0)";
+            } else {
+                document.getElementById("header").style.borderBottomColor = "rgb(255, 183, 0)";
+            }
+            this.oldScroll = this.scrollY;
+        }
+
+
+        header.addEventListener("mouseenter", () => {
+            header.style.transitionDuration = "500ms";
+            header.style.fontSize = "50px";
+            var r = Math.round(Math.random() * 1000) % 256;
+            var g = Math.round(Math.random() * 1000) % 256;
+            var b = Math.round(Math.random() * 1000) % 256;
+            header.style.color = `rgb(${r},${g},${b})`;
+            header.style.cursor = "pointer";
+        })
+
+        header.addEventListener("mouseleave", () => {
+            header.style.transitionDuration = "500ms";
+            header.style.fontSize = "40px";
+            // header.style.color = "rgb(0,0,0)";
+        });
+    </script>
+</body>
+
+</html>
