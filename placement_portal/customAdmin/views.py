@@ -17,7 +17,7 @@ def adminJobView(request):
     page_obj = jobPaginator.get_page(page)
     context = {'page_obj': page_obj}
     print(context)
-    return render(request, 'customAdmin/applications.html', context)
+    return render(request, 'customAdmin/jobs.html', context)
 
 
 def adminJobApplicationsView(request, jobId):
@@ -28,4 +28,4 @@ def adminJobApplicationsView(request, jobId):
     page_obj = applicationsPaginator.get_page(page)
     context = {'page_obj': page_obj}
 
-    return render(request, 'customAdmin/dashboard.html', context)
+    return render(request, 'customAdmin/applications.html', context)
