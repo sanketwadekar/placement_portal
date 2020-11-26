@@ -10,6 +10,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.5.2/lux/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css">
     <style>
+
+        .background-yellow{
+            background-color: rgb(255, 183, 0);
+        }
+
         .header {
             font-family: "Lekton", sans-serif;
             font-weight: bold;
@@ -73,6 +78,7 @@
         }
     </style>
     <title>{% block title %}Placements portal{% endblock title%}</title>
+    {% block styles %}{% endblock styles %}
 </head>
 
 <body>
@@ -93,6 +99,7 @@
             {% block content %}
             {% endblock content %}
         </div>
+        {% include './footer.html' %}
     </div>
     <script>
         let count = 0;

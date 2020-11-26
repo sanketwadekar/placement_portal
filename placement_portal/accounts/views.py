@@ -11,7 +11,9 @@ from django.db.models import Q
 from .forms import CreateUserForm
 # Create your views here.
 
-
+def aboutView(request):
+    return render(request, 'accounts/about.html', {});
+    
 def registerView(request):
     if request.user.is_authenticated:
         return redirect('home')

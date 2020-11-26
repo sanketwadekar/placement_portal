@@ -1,0 +1,86 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}About{% endblock title %}
+{% block styles%}
+<style>
+    .about-card {
+        border: solid 2px gray;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        margin: auto;
+        /* max-width: 90%; */
+    }
+
+    .background-yellow {
+        background-color: rgb(255, 183, 0);
+    }
+
+    .about-main {
+        font-size: 1.5rem;
+        border-bottom: solid 3px rgb(197, 197, 197);
+    }
+
+    .about-page {
+        max-width: 70%;
+        margin: 2rem auto;
+        padding: 2rem;
+        border: solid 2px brown;
+    }
+
+    .about-title,
+    .about-title:hover {
+        color: brown;
+        font-family: 'Lekton', sans-serif;
+        font-size: 3rem;
+        text-decoration: underline;
+        cursor: default;
+    }
+
+    .about-title:hover {
+        text-decoration-color: rgb(0, 0, 0);
+    }
+
+    .about-name {
+        font-size: 1.5rem;
+    }
+
+    .about-link {
+        font-size: 1.2rem;
+        font-family: 'Lekton', sans-serif;
+        font-weight: bold;
+        color: rgb(211, 127, 0);
+        font-style: italic;
+    }
+
+    .about-link:hover {
+        color:brown;
+    }
+</style>
+{% endblock styles%}
+
+{% block content %}
+<div class="about-page background-yellow text-center">
+    <div class="about-card text-center bg-light">
+        <div>
+            <div class="about-title">About</div>
+            <div class="about-main">Placements is a placement portal where candidates get notifications regarding jobs
+                and internships</div>
+        </div>
+        <div class="about-main">
+            <div class="about-title">Contributors</div>
+            <div class="about-name">
+                Shreyas Kulkarni&nbsp;<a class="about-link" href="https://github.com/shreyas710" target="blank"><span>&#123;%</span><span>&nbsp;shreyas710&nbsp;</span><span>%&#125;</span></a>
+            </div>
+            <div class="about-name">
+                Sojas Khandagale&nbsp;<a class="about-link" href="https://github.com/sojas07" target="blank"><span>&#123;%</span><span>&nbsp;sojas07&nbsp;</span><span>%&#125;</span></a>
+            </div>
+            <div class="about-name">
+                Sanket Varpe&nbsp;<a class="about-link" href="https://github.com/sanketvarpe" target="blank"><span>&#123;%</span><span>&nbsp;sanketvarpe&nbsp;</span><span>%&#125;</span></a>
+
+            </div>
+            <div class="about-name">
+                Sanket Wadekar&nbsp;<a class="about-link" href="https://github.com/sanketwadekar" target="blank"><span>&#123;%</span><span>&nbsp;sanketwadekar&nbsp;</span><span>%&#125;</span></a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -8,8 +8,8 @@ urlpatterns = [
     path('logout/', views.logoutView, name = 'logout'),
     path('notices/', views.noticeView, name = 'notices'),
     path('apply/<str:jobId>/', views.applyToJobView, name = 'apply'),
-    path('applications/', views.applicantView, name = 'applications')
-
+    path('applications/', views.applicantView, name = 'applications'),
+    path('about/', views.aboutView, name="about")
 
     
 ]
