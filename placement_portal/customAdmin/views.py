@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 import csv
 from django.http import FileResponse
+import json
 # Create your views here.
 
 @login_required(login_url = 'accounts:login')
@@ -58,10 +59,13 @@ def adminChangeApplicationView(request):
     body = json.loads(body_unicode)
     JobId = body['jobId']
     Status = body['status']
-    ID = body['id']
+    ID = body['appId']
     applicant = applicantModel.objects.get(id = ID)
     if not applicant:
         print("No application found")
     else :
        applicant.status = Status
        applicant.save()
+    response = HttpResponse("")
+    response.status_code = 200
+    return response
