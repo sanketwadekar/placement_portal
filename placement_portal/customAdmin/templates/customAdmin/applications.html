@@ -6,22 +6,25 @@
 {% endblock styles%}
 {% block content %}
 <div>
-    <div class="display-4 border-bottom mx-1">
-        Applications
+    <div class="border-bottom mx-1 d-flex justify-content-between align-items-center">
+        <div class="display-4 ">Applications</div>
+        <div><a href="{% url 'customadmin:download' job.id %}" class="btn btn-dark" target="blank">Download list</a></div>
     </div>
     <div class="mt-2">
         <p><span class="text-warning">Job Name: </span>{{ job.name }}</p>
         <p><span class="text-warning">Salary ( In Rupees ): </span>{{ job.salary }}</p>
         <p><span class="text-warning">Company Name:</span> {{ job.cName.name }}</p>
         <p><span class="text-warning">Company Address:</span> {{ job.cName.address }}</p>
-        <p><span class="text-warning">Last date to apply:</span> {{job.lastDateToApply.day}}/{{job.lastDateToApply.month}}/{{job.lastDateToApply.year}}</p>
+        <p><span class="text-warning">Last date to apply:</span>
+            {{job.lastDateToApply.day}}/{{job.lastDateToApply.month}}/{{job.lastDateToApply.year}}</p>
+        
     </div>
     <div class="table-responsive">
         <table class="table table-sm table-bordered table-light mt-1">
             <thead class="thead-dark">
                 <tr>
                     <th>Application Id</th>
-                    <th>Registration ID</th>
+                    <th>Registration Id</th>
                     <th>Name</th>
                     <th>Application status</th>
                 </tr>
@@ -35,13 +38,13 @@
                     <td>
                         <div class="btn-group btn-group-sm d-inline-flex justify-content-around">
                             <button type="button" onclick="changeStatus(event)" id="ip-{{app.id}}"
-                                data-id="{{ app.id }}" data-success="btn-info" class="btn {% ifequal app.status 'In Process' %} btn-info {% else %} btn-dark
+                                data-id="{{ app.id }}" data-success="btn-info" data-action="In Process" class="btn {% ifequal app.status 'In Process' %} btn-info {% else %} btn-dark
                         {% endifequal %}">In Process</button>
                             <button type="button" onclick="changeStatus(event)" id="h-{{app.id}}" data-id="{{ app.id }}"
-                                data-success="btn-success" class="btn {% ifequal app.status 'Hired' %} btn-success {% else %} btn-dark
+                                data-success="btn-success" data-action="Hired" class="btn {% ifequal app.status 'Hired' %} btn-success {% else %} btn-dark
                         {% endifequal %}">Hired</button>
                             <button type="button" onclick="changeStatus(event)" id="r-{{app.id}}" data-id="{{ app.id }}"
-                                data-success="btn-danger" class="btn {% ifequal app.status 'Rejected' %} btn-danger {% else %} btn-dark
+                                data-success="btn-danger" data-action="Rejected" class="btn {% ifequal app.status 'Rejected' %} btn-danger {% else %} btn-dark
                         {% endifequal %}">Rejected</button>
                         </div>
                     </td>
@@ -67,16 +70,24 @@
 </div>
 <script>
     async function changeStatus(event) {
-        // const response = await fetch("/custom-admin/applications/change-status", {method="post"});
-        const allButtons = document.querySelectorAll(`[data-id='${event.target.dataset.id}']`);
-        for (let i = 0; i < allButtons.length; i++) {
-            if (allButtons[i].id != event.target.id) {
-                allButtons[i].classList.remove(allButtons[i].dataset.success);
-                allButtons[i].classList.add("btn-dark");
+        const response = await fetch("/custom-admin/applications/change-status", { method:"post", headers: { 'Content-Type': "application/json"}, body: JSON.stringify({ jobId: "{{ job.id }}", appId: `${event.target.dataset.id}`, status: `${event.target.dataset.action}` }) });
+        if (response.status === 200) {
+            const allButtons = document.querySelectorAll(`[data-id='${event.target.dataset.id}']`);
+            for (let i = 0; i < allButtons.length; i++) {
+                if (allButtons[i].id != event.target.id) {
+                    allButtons[i].classList.remove(allButtons[i].dataset.success);
+                    allButtons[i].classList.add("btn-dark");
+                }
             }
+            event.target.classList.add(event.target.dataset.success);
+            event.target.classList.remove("btn-dark");
         }
-        event.target.classList.add(event.target.dataset.success);
-        event.target.classList.remove("btn-dark");
+        else {
+            document.getElementById("message-box").innerHTML += `<div class="alert alert-dismissible alert-primary">
+		<button type="button" class="close" data-dismiss="alert">&times;</button>
+		<a href="#" class="alert-link"> [Error code: ${response.status}] Application Status change failed</a>
+	</div>`
+        }
     }
 </script>
 {% endblock content %}
