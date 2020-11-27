@@ -25,9 +25,10 @@ def registerView(request):
             if registerForm.is_valid():
                 registerForm.save()
                 user1 = registerForm.cleaned_data.get('username')
+                mail = registerForm.cleaned_data.get('email')
                 messages.success(
                     request, 'Account was successfully created for ' + user1)
-                subject, htmplTemplateName, to = 'welcome', 'registerMailTemplate.html', request.user.email 
+                subject, htmplTemplateName, to = 'welcome', 'registerMailTemplate.html', mail
                 sendRegistrationMail(request,subject,htmplTemplateName,to)
                 return redirect('login')
     context = {'registerForm': registerForm}
