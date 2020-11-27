@@ -16,8 +16,10 @@ def aboutView(request):
     return render(request, 'accounts/about.html', {});
     
 def registerView(request):
-    if request.user.is_authenticated:
-        return redirect('home')
+    if request.user.is_authenticated and request.user.is_superuser:
+        redirect('customadmin:customAdminJob')
+    elif request.user.is_authenticated and not (request.user.is_superuser):
+        return redirect('accounts:home')
     else:
         registerForm = CreateUserForm()
         if request.method == 'POST':
@@ -27,33 +29,37 @@ def registerView(request):
                 user1 = registerForm.cleaned_data.get('username')
                 messages.success(
                     request, 'Account was successfully created for ' + user1)
-                subject, htmplTemplateName, to = 'welcome', 'registerMailTemplate.html', request.user.email 
-                sendRegistrationMail(request,subject,htmplTemplateName,to)
-                return redirect('login')
+                subject, htmplTemplateName, to, first_name, last_name = 'welcome', 'registerMailTemplate.html', request.user.email 
+                sendRegistrationMail(request,subject,htmplTemplateName,to,first_name,last_name)
+                return redirect('accounts:login')
     context = {'registerForm': registerForm}
     return render(request, 'accounts/register.html', context)
 
 
 def loginView(request):
-    if request.user.is_authenticated:
-        return redirect('home')
+    if request.user.is_authenticated and request.user.is_superuser:
+        redirect('customadmin:customAdminJob')
+    elif request.user.is_authenticated and not (request.user.is_superuser):
+        return redirect('accounts:home')
     else:
         if request.method == 'POST':
             username = request.POST.get('username')
             password = request.POST.get('password')
             print(username, password)
             user = authenticate(request, username=username, password=password)
-
             if user is not None:
                 login(request, user)
-                return redirect('home')
+                if user.is_superuser:
+                    return redirect('customadmin:customAdminJob')
+                else:
+                    return redirect('accounts:home')
             else:
                 messages.info(request, 'Inavlid Credentials..')
         context = {}
         return render(request, 'accounts/login.html', context)
 
 
-@login_required(login_url='login')
+@login_required(login_url='accounts:login')
 def homeView(request):
     jobs = jobModel.objects.filter().order_by('-lastDateToApply')
     jobPaginator = Paginator(jobs, 6)
@@ -65,10 +71,10 @@ def homeView(request):
 
 def logoutView(request):
     logout(request)
-    return redirect('login')
+    return redirect('accounts:login')
 
 
-@login_required(login_url='login')
+@login_required(login_url='accounts:login')
 def noticeView(request):
     notices = noticeModel.objects.filter().order_by('-date')
     noticePaginator = Paginator(notices, 6)
@@ -78,7 +84,7 @@ def noticeView(request):
     return render(request, 'accounts/notices.html', context)
 
 
-@login_required(login_url='login')
+@login_required(login_url='accounts:login')
 def applicantView(request):
     applications = applicantModel.objects.filter(user=request.user)
     appsPaginator = Paginator(applications, 6)
@@ -90,7 +96,7 @@ def applicantView(request):
     return render(request, 'accounts/applications.html', context)
 
 
-@login_required(login_url='login')
+@login_required(login_url='accounts:login')
 def applyToJobView(request, jobId):
     condition1 = Q(user=request.user)
     condition2 = Q(jobId=jobId)
@@ -106,4 +112,4 @@ def applyToJobView(request, jobId):
         applicant.save()
         messages.success(request, 'Applied successfully...')
 
-    return redirect('home')
+    return redirect('accounts:home')
