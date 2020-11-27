@@ -27,11 +27,12 @@ def registerView(request):
             if registerForm.is_valid():
                 registerForm.save()
                 user1 = registerForm.cleaned_data.get('username')
+                mail = registerForm.cleaned_data.get('email')
                 messages.success(
                     request, 'Account was successfully created for ' + user1)
-                subject, htmplTemplateName, to, first_name, last_name = 'welcome', 'registerMailTemplate.html', request.user.email 
-                sendRegistrationMail(request,subject,htmplTemplateName,to,first_name,last_name)
-                return redirect('accounts:login')
+                subject, htmplTemplateName, to = 'welcome', 'registerMailTemplate.html', mail
+                sendRegistrationMail(request,subject,htmplTemplateName,to)
+                return redirect('login')
     context = {'registerForm': registerForm}
     return render(request, 'accounts/register.html', context)
 
@@ -45,7 +46,6 @@ def loginView(request):
         if request.method == 'POST':
             username = request.POST.get('username')
             password = request.POST.get('password')
-            print(username, password)
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
@@ -90,9 +90,9 @@ def applicantView(request):
     appsPaginator = Paginator(applications, 6)
     page_number = request.GET.get('page')
     page_obj = appsPaginator.get_page(page_number)
-    context = {'page_obj': page_obj}
+    context = {'page_obj': page_obj, 'noapplications': False}
     if not applications:
-        return HttpResponse("There are no applications")
+        context['noapplications'] = True
     return render(request, 'accounts/applications.html', context)
 
 
