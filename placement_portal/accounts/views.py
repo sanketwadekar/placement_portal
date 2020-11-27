@@ -41,7 +41,6 @@ def loginView(request):
         if request.method == 'POST':
             username = request.POST.get('username')
             password = request.POST.get('password')
-            print(username, password)
             user = authenticate(request, username=username, password=password)
 
             if user is not None:
@@ -84,9 +83,9 @@ def applicantView(request):
     appsPaginator = Paginator(applications, 6)
     page_number = request.GET.get('page')
     page_obj = appsPaginator.get_page(page_number)
-    context = {'page_obj': page_obj}
+    context = {'page_obj': page_obj, 'noapplications': False}
     if not applications:
-        return HttpResponse("There are no applications")
+        context['noapplications'] = True
     return render(request, 'accounts/applications.html', context)
 
 

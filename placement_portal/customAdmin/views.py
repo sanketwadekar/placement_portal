@@ -16,16 +16,13 @@ def adminJobView(request):
     page = request.GET.get('page')
     page_obj = jobPaginator.get_page(page)
     context = {'page_obj': page_obj}
-    print(context)
     return render(request, 'customAdmin/jobs.html', context)
 
 
 def adminJobApplicationsView(request, jobId):
     applicationsList = applicantModel.objects.filter(jobId=jobId)
     applicationsPaginator = Paginator(applicationsList, 6)
-
     page = request.GET.get('page')
     page_obj = applicationsPaginator.get_page(page)
-    context = {'page_obj': page_obj}
-
+    context = {'page_obj': page_obj, 'job': page_obj[0].jobId}
     return render(request, 'customAdmin/applications.html', context)

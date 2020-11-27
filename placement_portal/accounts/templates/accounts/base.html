@@ -19,9 +19,7 @@
             font-family: "Lekton", sans-serif;
             font-weight: bold;
             font-size: 40px;
-            position: sticky;
-            top: 0;
-            z-index: 1;
+            
             background-color: rgb(255, 255, 255);
             border-bottom: solid 5px rgba(0, 0, 0);
         }
@@ -31,6 +29,9 @@
         }
 
         .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1;
             margin: 0;
             padding: 0;
             display: flex;
@@ -75,6 +76,9 @@
         .btn:hover {
             background-color: rgb(255, 174, 0);
             color: black;
+        }
+        .display-4{
+            color: rgb(177, 104, 9);
         }
     </style>
     <title>{% block title %}Placements portal{% endblock title%}</title>
