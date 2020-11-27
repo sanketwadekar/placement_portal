@@ -1,16 +1,25 @@
 <nav class="navbar">
-  <div class="nav-name-container">Hello, <a class="nav-name" href="/">{{request.user.first_name}}&nbsp;{{request.user.last_name}}</a></div>
+  <div class="nav-name-container">Hello,
+    {% if not request.user.is_superuser %}
+      <a class="nav-name" href="{% url 'accounts:home'%}">{{request.user.first_name}}&nbsp;{{request.user.last_name}}</a>
+    {% else %}
+      <a class="nav-name" href="{% url 'accounts:home'%}">Admin</a>
+    {% endif %}
+  </div>
   <div>
+    
     <ul class="">
-      <li class="nav-item">
-        <a class="" href="/notices">Notices</a>
-      </li>
-      <li class="nav-item">
-        <a class="" href="/applications">My applications</a>
-      </li>
-      <li class="nav-item">
-        <a class="" href="/logout">Logout</a>
-      </li>
+      {% if not request.user.is_superuser %}
+        <li class="nav-item">
+          <a class="" href="{% url 'accounts:notices' %}">Notices</a>
+        </li>
+        <li class="nav-item">
+          <a class="" href="{% url 'accounts:applications' %}">My applications</a>
+        </li>
+      {% endif %}
+        <li class="nav-item">
+          <a class="" href="{% url 'accounts:logout' %}">Logout</a>
+        </li>
     </ul>
   </div>
 </nav>

@@ -1,5 +1,5 @@
 {% extends 'accounts/base.html' %}
-{%block title%}Applications{%endblock title%}
+{%block title%}Jobs{%endblock title%}
 {% block content %}
 <div>
   <div class="display-4 border-bottom mx-1">
@@ -20,10 +20,23 @@
       <th scope="row" style="font-size: 15px; border: 1px solid black;">{{ app.cName }}</th>
       <td style="font-size: 15px; border: 1px solid black;">{{ app.name }}</td>
       <td style="font-size: 15px; border: 1px solid black;">{{ app.lastDateToApply }}</td>
-      <td style="font-size: 15px; border: 1px solid black;"><a class="btn btn-primary m-2" href="/custom-admin/view/applications/{{app.id}}" target="_blank">APPLICATIONS</a></td>
+      <td style="font-size: 15px; border: 1px solid black;"><a class="btn btn-primary m-2" href="{% url 'customadmin:applications' app.id %}" >View Applications</a></td>
     </tr>
   {% endfor %}
   </tbody>
 </table>
+<div class="d-flex justify-content-center m-2">
+  <ul class="pagination">
+      {% if page_obj.has_previous %}
+      <li class="page-item border border-dark"><a class="page-link"
+              href="{% url 'customadmin:jobs' %}?page={{ page_obj.previous_page_number }}">previous</a></li>
+      {% endif %}
+
+      {% if page_obj.has_next %}
+      <li class="page-item border border-dark"><a class="page-link"
+              href="{% url 'customadmin:jobs' %}?page={{ page_obj.next_page_number }}">next</a></li>
+      {% endif %}
+  </ul>
+</div>
 </div>
 {% endblock content %}

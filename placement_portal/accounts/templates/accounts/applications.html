@@ -6,7 +6,7 @@
     Applications
   </div>
   {% if noapplications %}<h4 class="text-center">
-    No applications !!! <a class="text-info" href="/">Apply now</a>
+    No applications !!! <a class="text-info" href="{% url 'accounts:home' %}">Apply now</a>
   </h4>
   {% else %}
     <div class="container" style="padding-left: 10px; padding-right: 10px; margin-top:50px;">
@@ -44,12 +44,11 @@
       <ul class="pagination">
         {% if page_obj.has_previous %}
         <li class="page-item border border-dark"><a class="page-link"
-            href="?page={{ page_obj.previous_page_number }}">previous</a></li>
+            href="{% url 'accounts:applications' %}?page={{ page_obj.previous_page_number }}">previous</a></li>
         {% endif %}
-
         {% if page_obj.has_next %}
         <li class="page-item border border-dark"><a class="page-link"
-            href="?page={{ page_obj.next_page_number }}">next</a></li>
+            href="{% url 'accounts:applications' %}?page={{ page_obj.next_page_number }}">next</a></li>
         {% endif %}
       </ul>
     </div>

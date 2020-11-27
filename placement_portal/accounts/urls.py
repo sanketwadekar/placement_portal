@@ -12,6 +12,4 @@ urlpatterns = [
     path('apply/<str:jobId>/', views.applyToJobView, name = 'apply'),
     path('applications/', views.applicantView, name = 'applications'),
     path('about/', views.aboutView, name="about")
-
-    
 ]
