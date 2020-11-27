@@ -36,7 +36,7 @@ def registerView(request):
                     request, 'Account was successfully created for ' + user1)
                 subject, htmplTemplateName, to = 'welcome', 'registerMailTemplate.html', mail
                 sendRegistrationMail(request,subject,htmplTemplateName,to,first_name,last_name)
-                return redirect('login')
+                return redirect('accounts:login')
     context = {'registerForm': registerForm}
     return render(request, 'accounts/register.html', context)
 
