@@ -23,7 +23,7 @@
         </div>
         <div class="d-inline-flex flex-row-reverse ">
           <a class="btn btn-primary m-2" href="{{job.jdFile.url}}" role="button" target="blank">Details</a>
-          <a class="btn btn-primary m-2" href="/apply/{{job.id}}" role="button">Apply</a>
+          <a class="btn btn-primary m-2" href="{% url 'accounts:apply' job.id %}" role="button">Apply</a>
         </div>
       </div>
     </div>
@@ -34,12 +34,12 @@
     <ul class="pagination">
       {% if page_obj.has_previous %}
       <li class="page-item border border-dark"><a class="page-link"
-          href="?page={{ page_obj.previous_page_number }}">previous</a></li>
+          href="{% url 'accounts:home' %}?page={{ page_obj.previous_page_number }}">previous</a></li>
       {% endif %}
 
       {% if page_obj.has_next %}
       <li class="page-item border border-dark"><a class="page-link"
-          href="?page={{ page_obj.next_page_number }}">next</a></li>
+          href="{% url 'accounts:home' %}?page={{ page_obj.next_page_number }}">next</a></li>
       {% endif %}
     </ul>
   </div>

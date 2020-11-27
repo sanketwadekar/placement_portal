@@ -50,7 +50,7 @@ def loginView(request):
             if user is not None:
                 login(request, user)
                 if user.is_superuser:
-                    return redirect('customadmin:customAdminJob')
+                    return redirect('customadmin:jobs')
                 else:
                     return redirect('accounts:home')
             else:
@@ -61,6 +61,8 @@ def loginView(request):
 
 @login_required(login_url='accounts:login')
 def homeView(request):
+    if request.user.is_superuser:
+        return redirect('customadmin:jobs')
     jobs = jobModel.objects.filter().order_by('-lastDateToApply')
     jobPaginator = Paginator(jobs, 6)
     page_number = request.GET.get('page')

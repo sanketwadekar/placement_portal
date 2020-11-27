@@ -4,6 +4,6 @@ from . import views
 app_name = 'customAdmin'
 
 urlpatterns = [
-    path('jobs/',views.adminJobView,name = 'customAdminJob'),
-    path('view/applications/<str:jobId>',views.adminJobApplicationsView,name = 'customAdminApplications')
+    path('jobs/',views.adminJobView,name = 'jobs'),
+    path('view/applications/<str:jobId>',views.adminJobApplicationsView,name = 'applications')
 ]
