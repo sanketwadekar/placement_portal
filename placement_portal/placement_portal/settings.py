@@ -137,4 +137,4 @@ EMAIL_USE_TLS = True
 
 #mail credentials
 EMAIL_HOST_USER = "mailer.jobportal@gmail.com"
-EMAIL_HOST_PASSWORD = "placementportaladmin@123"
+EMAIL_HOST_PASSWORD = "**********"
