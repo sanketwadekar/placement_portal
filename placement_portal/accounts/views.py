@@ -17,7 +17,7 @@ def aboutView(request):
     
 def registerView(request):
     if request.user.is_authenticated and request.user.is_superuser:
-        redirect('customadmin:customAdminJob')
+        redirect('customadmin:jobs')
     elif request.user.is_authenticated and not (request.user.is_superuser):
         return redirect('accounts:home')
     else:

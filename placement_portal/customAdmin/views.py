@@ -51,3 +51,17 @@ def adminDownloadCsvFile(request,jobId):
     else:
         response = "No applications found..."
     return response
+
+#@login_required(login_url = 'accounts:login')
+def adminChangeApplicationView(request):
+    body_unicode = request.body.decode('utf-8')
+    body = json.loads(body_unicode)
+    JobId = body['jobId']
+    Status = body['status']
+    ID = body['id']
+    applicant = applicantModel.objects.get(id = ID)
+    if not applicant:
+        print("No application found")
+    else :
+       applicant.status = Status
+       applicant.save()
