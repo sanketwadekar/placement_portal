@@ -117,7 +117,7 @@ def applyToJobView(request, jobId):
         applicant = applicantModel(
             user=request.user, jobId=jobModel(id=jobId), status='In Process')
         applicant.save()
-        sendApplyMail(request,"Job Application","applyMailTemplate.html",[userObj.email],checkIfDatePassed.name,checkIfDatePassed.cName)
+        sendApplyMail(request,"Job Application","applyMailTemplate.html",userObj.email,checkIfDatePassed.name,checkIfDatePassed.cName)
         messages.success(request, 'Applied successfully...')
 
     return redirect('accounts:home')
