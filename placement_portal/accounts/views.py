@@ -9,11 +9,13 @@ from django.db.models import Q
 from datetime import date
 from .mailEngine import sendRegistrationMail,sendApplyMail
 from .forms import CreateUserForm
+from django.contrib.auth.models import User
+
 #from .models import *
 # Create your views here.
 
 def aboutView(request):
-    return render(request, 'accounts/about.html', {});
+    return render(request, 'accounts/about.html', {})
     
 def registerView(request):
     if request.user.is_authenticated and request.user.is_superuser:
