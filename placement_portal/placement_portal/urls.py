@@ -20,8 +20,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',include('accounts.urls')),
-    path('custom-admin/',include('customAdmin.urls'))
+    path('',include('accounts.urls',namespace = 'accounts')),
+    path('custom-admin/',include('customAdmin.urls',namespace = 'customadmin'))
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 
 admin.site.site_header = 'Placement Portal Administration'

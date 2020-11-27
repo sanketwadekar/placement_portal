@@ -2,59 +2,81 @@
 {%block title%}Dashboard{%endblock title%}
 {% block styles %}
 <style>
-
 </style>
 {% endblock styles%}
 {% block content %}
-<div class="table-responsive">
+<div>
     <div class="display-4 border-bottom mx-1">
         Applications
     </div>
-    <div>
-    <table class="table table-sm table-bordered table-light mt-5">
-        <thead class="thead-dark">
-            <tr>
-                <th>Application Id</th>
-                <th>Registration ID</th>
-                <th>Name</th>
-                <th>Application status</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for app in page_obj %}
-            <tr>
-                <td>{{ app.id }}</td>
-                <td>{{ app.user}}</td>
-                <td>{{ app.user.first_name }}&nbsp;{{ app.user.last_name }}</td>
-                <td>
-                    <div class="btn-group btn-group-sm d-inline-flex justify-content-around">
-                        <button type="button" onclick="changeStatus(event)" id="ip-{{app.id}}" data-id="{{ app.id }}" data-success="btn-info" class="btn {% ifequal app.status 'In Process' %} btn-info {% else %} btn-dark
+    <div class="mt-2">
+        <p><span class="text-warning">Job Name: </span>{{ job.name }}</p>
+        <p><span class="text-warning">Salary ( In Rupees ): </span>{{ job.salary }}</p>
+        <p><span class="text-warning">Company Name:</span> {{ job.cName.name }}</p>
+        <p><span class="text-warning">Company Address:</span> {{ job.cName.address }}</p>
+        <p><span class="text-warning">Last date to apply:</span> {{job.lastDateToApply.day}}/{{job.lastDateToApply.month}}/{{job.lastDateToApply.year}}</p>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-sm table-bordered table-light mt-1">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Application Id</th>
+                    <th>Registration ID</th>
+                    <th>Name</th>
+                    <th>Application status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for app in page_obj %}
+                <tr>
+                    <td>{{ app.id }}</td>
+                    <td>{{ app.user}}</td>
+                    <td>{{ app.user.first_name }}&nbsp;{{ app.user.last_name }}</td>
+                    <td>
+                        <div class="btn-group btn-group-sm d-inline-flex justify-content-around">
+                            <button type="button" onclick="changeStatus(event)" id="ip-{{app.id}}"
+                                data-id="{{ app.id }}" data-success="btn-info" class="btn {% ifequal app.status 'In Process' %} btn-info {% else %} btn-dark
                         {% endifequal %}">In Process</button>
-                        <button type="button" onclick="changeStatus(event)" id="h-{{app.id}}" data-id="{{ app.id }}" data-success="btn-success"class="btn {% ifequal app.status 'Hired' %} btn-success {% else %} btn-dark
+                            <button type="button" onclick="changeStatus(event)" id="h-{{app.id}}" data-id="{{ app.id }}"
+                                data-success="btn-success" class="btn {% ifequal app.status 'Hired' %} btn-success {% else %} btn-dark
                         {% endifequal %}">Hired</button>
-                        <button type="button" onclick="changeStatus(event)" id="r-{{app.id}}" data-id="{{ app.id }}" data-success="btn-danger" class="btn {% ifequal app.status 'Rejected' %} btn-danger {% else %} btn-dark
+                            <button type="button" onclick="changeStatus(event)" id="r-{{app.id}}" data-id="{{ app.id }}"
+                                data-success="btn-danger" class="btn {% ifequal app.status 'Rejected' %} btn-danger {% else %} btn-dark
                         {% endifequal %}">Rejected</button>
-                      </div>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="d-flex justify-content-center m-2">
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+            <li class="page-item border border-dark"><a class="page-link"
+                    href="?page={{ page_obj.previous_page_number }}">previous</a></li>
+            {% endif %}
+
+            {% if page_obj.has_next %}
+            <li class="page-item border border-dark"><a class="page-link"
+                    href="?page={{ page_obj.next_page_number }}">next</a></li>
+            {% endif %}
+        </ul>
+    </div>
 </div>
 <script>
-    async function changeStatus(event){
+    async function changeStatus(event) {
         // const response = await fetch("/custom-admin/applications/change-status", {method="post"});
         const allButtons = document.querySelectorAll(`[data-id='${event.target.dataset.id}']`);
-        for(let i = 0; i < allButtons.length; i++){
-            if(allButtons[i].id != event.target.id){
+        for (let i = 0; i < allButtons.length; i++) {
+            if (allButtons[i].id != event.target.id) {
                 allButtons[i].classList.remove(allButtons[i].dataset.success);
                 allButtons[i].classList.add("btn-dark");
             }
         }
-        event.target.classList.add(event.target.dataset.success);  
-        event.target.classList.remove("btn-dark");  
+        event.target.classList.add(event.target.dataset.success);
+        event.target.classList.remove("btn-dark");
     }
 </script>
-</div>
-
 {% endblock content %}
