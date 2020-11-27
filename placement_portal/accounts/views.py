@@ -7,7 +7,7 @@ from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from datetime import date
-from .mailEngine import sendRegistrationMail
+from .mailEngine import sendRegistrationMail,sendApplyMail
 from .forms import CreateUserForm
 #from .models import *
 # Create your views here.
@@ -28,10 +28,12 @@ def registerView(request):
                 registerForm.save()
                 user1 = registerForm.cleaned_data.get('username')
                 mail = registerForm.cleaned_data.get('email')
+                first_name = registerForm.cleaned_data.get('first_name')
+                last_name = registerForm.cleaned_data.get('last_name')
                 messages.success(
                     request, 'Account was successfully created for ' + user1)
                 subject, htmplTemplateName, to = 'welcome', 'registerMailTemplate.html', mail
-                sendRegistrationMail(request,subject,htmplTemplateName,to)
+                sendRegistrationMail(request,subject,htmplTemplateName,to,first_name,last_name)
                 return redirect('login')
     context = {'registerForm': registerForm}
     return render(request, 'accounts/register.html', context)
@@ -103,6 +105,7 @@ def applyToJobView(request, jobId):
     condition1 = Q(user=request.user)
     condition2 = Q(jobId=jobId)
     checkIfDatePassed = jobModel.objects.get(id = jobId)
+    userObj = User.objects.get(username = request.user)
     checkIfApplied = applicantModel.objects.filter(condition1 & condition2)
     if len(checkIfApplied):
         messages.info(request, 'Already applied...')
@@ -112,6 +115,7 @@ def applyToJobView(request, jobId):
         applicant = applicantModel(
             user=request.user, jobId=jobModel(id=jobId), status='In Process')
         applicant.save()
+        sendApplyMail(request,"Job Application","applyMailTemplate.html",[userObj.email],checkIfDatePassed.name,checkIfDatePassed.cName)
         messages.success(request, 'Applied successfully...')
 
     return redirect('accounts:home')
