@@ -1,15 +1,15 @@
 <nav class="navbar">
-  <div class="nav-name-container">Hello, <a class="nav-name" href="/">{{request.user.first_name}}&nbsp;{{request.user.last_name}}</a></div>
+  <div class="nav-name-container">Hello, <a class="nav-name" href="{% url 'home'%}">{{request.user.first_name}}&nbsp;{{request.user.last_name}}</a></div>
   <div>
     <ul class="">
       <li class="nav-item">
-        <a class="" href="/notices">Notices</a>
+        <a class="" href="{% url 'accounts:notices' %}">Notices</a>
       </li>
       <li class="nav-item">
-        <a class="" href="/applications">My applications</a>
+        <a class="" href="{% url 'accounts:applications' %}">My applications</a>
       </li>
       <li class="nav-item">
-        <a class="" href="/logout">Logout</a>
+        <a class="" href="{% url 'accounts:logout' %}">Logout</a>
       </li>
     </ul>
   </div>
