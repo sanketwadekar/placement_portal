@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 # Create your views here.
 
-
+@login_required(login_url = 'accounts:login')
 def adminJobView(request):
     jobList = jobModel.objects.filter().order_by('-lastDateToApply')
     jobPaginator = Paginator(jobList, 6)
@@ -18,7 +18,7 @@ def adminJobView(request):
     context = {'page_obj': page_obj}
     return render(request, 'customAdmin/jobs.html', context)
 
-
+@login_required(login_url = 'accounts:login')
 def adminJobApplicationsView(request, jobId):
     applicationsList = applicantModel.objects.filter(jobId=jobId)
     applicationsPaginator = Paginator(applicationsList, 6)
